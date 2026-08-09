@@ -4,7 +4,7 @@ import { MemoryRouter } from 'react-router';
 import App from './App';
 
 describe('App', () => {
-  it('renders home page', () => {
+  it('renders the landing page at /', () => {
     render(
       <MemoryRouter>
         <App />

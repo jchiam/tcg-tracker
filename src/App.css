@@ -1,5 +1,5 @@
-main {
-  max-width: 960px;
+.main-content {
+  max-width: 1200px;
   margin: 0 auto;
-  padding: var(--spacing-lg, 2rem);
+  padding: var(--spacing-xl);
 }
