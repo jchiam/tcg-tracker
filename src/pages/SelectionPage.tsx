@@ -48,6 +48,11 @@ export function SelectionPage() {
           <GameCard key={game.id} game={game} />
         ))}
       </section>
+
+      <footer className="selection-attribution">
+        Card game imagery ©Bushiroad ©SOTSU・SUNRISE ©BANDAI. This is an unofficial fan project; all
+        trademarks belong to their respective owners.
+      </footer>
     </main>
   );
 }

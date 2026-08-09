@@ -37,5 +37,6 @@ describe('SelectionPage image fallback', () => {
     const card = screen.getByRole('button', { name: /Weiss Schwarz/ });
     expect(card).toBeEnabled();
     expect(screen.getByText('Bushiroad')).toBeInTheDocument();
+    expect(screen.getByText(/©Bushiroad/)).toBeInTheDocument();
   });
 });

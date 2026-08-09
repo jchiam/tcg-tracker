@@ -49,8 +49,15 @@ describe('SelectionPage', () => {
     expect(screen.getByRole('heading', { name: `${GAMES[1].name} page` })).toBeInTheDocument();
   });
 
-  it('renders no img elements while cover art is unsourced (coverImage null)', () => {
+  it('renders each cover image from the registry', () => {
     renderPage();
-    expect(document.querySelector('img')).toBeNull();
+    const imgs = [...document.querySelectorAll('img.game-cover-image')];
+    expect(imgs.map((img) => img.getAttribute('src'))).toEqual(GAMES.map((g) => g.coverImage));
+  });
+
+  it('shows the licensing attribution footer', () => {
+    renderPage();
+    expect(screen.getByText(/©Bushiroad/)).toBeInTheDocument();
+    expect(screen.getByText(/©SOTSU・SUNRISE ©BANDAI/)).toBeInTheDocument();
   });
 });

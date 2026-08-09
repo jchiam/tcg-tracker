@@ -40,6 +40,14 @@
   justify-content: center;
 }
 
+.selection-attribution {
+  text-align: center;
+  margin-top: var(--spacing-2xl);
+  color: var(--color-text-dim);
+  font-size: var(--typography-font-size-xs);
+  line-height: var(--typography-line-height-relaxed);
+}
+
 @media (max-width: 768px) {
   .selection-title {
     font-size: var(--typography-font-size-4xl);
