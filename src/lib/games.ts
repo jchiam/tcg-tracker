@@ -11,6 +11,8 @@ export interface Game {
   description: string;
   /** Game accent colour (metadata for future switcher/badges). */
   accent: string;
+  /** GameSwitcher trigger/dropdown icon, self-hosted under public/assets/icons/. */
+  icon: string;
   /** SelectionPage card cover image, self-hosted under public/assets/. Null until art is sourced. */
   coverImage: string | null;
   /** SelectionPage card header background class from index.css (`bg-<id>-sel`). */
@@ -31,6 +33,7 @@ export const GAMES: Game[] = [
     publisher: 'Bushiroad',
     description: 'Track your collection, trial decks, and 50-card builds across sets.',
     accent: '#c0c0cc',
+    icon: '/assets/icons/ws-icon.webp',
     coverImage: '/assets/weiss-schwarz/cover.webp',
     bgClass: 'bg-ws-sel',
     Page: lazy(() => import('@/pages/weiss-schwarz/WsPage').then((m) => ({ default: m.WsPage }))),
@@ -42,6 +45,7 @@ export const GAMES: Game[] = [
     publisher: 'Bandai Namco',
     description: 'Track your collection, resource decks, and unit/pilot builds.',
     accent: '#4a9fd8',
+    icon: '/assets/icons/gd-icon.webp',
     coverImage: '/assets/gundam/cover.webp',
     bgClass: 'bg-gd-sel',
     Page: lazy(() => import('@/pages/gundam/GdPage').then((m) => ({ default: m.GdPage }))),

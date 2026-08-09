@@ -18,6 +18,7 @@ describe('GAMES registry', () => {
       expect(game.description).toBeTruthy();
       expect(game.bgClass).toBe(`bg-${game.id}-sel`);
       expect(game.accent).toMatch(/^#[0-9a-f]{6}$/i);
+      expect(game.icon).toBe(`/assets/icons/${game.id}-icon.webp`);
     }
   });
 });
