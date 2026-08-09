@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test('landing page loads with both game cards', async ({ page }) => {
   await page.goto('/');
-  await expect(page.getByRole('heading', { name: 'TCG Tracker' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'The JonZone Card Zone' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Weiss Schwarz' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Gundam Card Game' })).toBeVisible();
 });

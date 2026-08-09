@@ -10,6 +10,6 @@ describe('App', () => {
         <App />
       </MemoryRouter>,
     );
-    expect(screen.getByRole('heading', { name: 'TCG Tracker' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'The JonZone Card Zone' })).toBeInTheDocument();
   });
 });

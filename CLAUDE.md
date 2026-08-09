@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-TCG Tracker — a trading card game tracker. Scaffolded from the sibling `../game-tracker` project and shares its tech stack and conventions: React 19 + TypeScript (strict) + Vite 8 + React Router 8, Supabase backend, Style Dictionary design tokens, Vitest/Playwright/Storybook.
+The JonZone Card Zone (package `jonzone-card-zone`) — a trading card game collection and deck tracker. Scaffolded from the sibling `../game-tracker` project and shares its tech stack and conventions: React 19 + TypeScript (strict) + Vite 8 + React Router 8, Supabase backend, Style Dictionary design tokens, Vitest/Playwright/Storybook.
 
 ## Commands
 

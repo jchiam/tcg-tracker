@@ -1,6 +1,6 @@
-# TCG Tracker
+# The JonZone Card Zone
 
-A trading card game tracker. Built with the same stack as [game-tracker](../game-tracker).
+A trading card game collection and deck tracker. Built with the same stack as [game-tracker](../game-tracker).
 
 ## Tech stack
 

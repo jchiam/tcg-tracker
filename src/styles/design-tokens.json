@@ -1,5 +1,5 @@
 {
-  "$description": "TCG Tracker design system — inherits game-tracker's Temper language: warm Ink/Slate/Porcelain neutrals with gold brand, plus per-TCG accent gradients",
+  "$description": "The JonZone Card Zone design system — inherits game-tracker's Temper language: warm Ink/Slate/Porcelain neutrals with gold brand, plus per-TCG accent gradients",
   "color": {
     "bg": {
       "base": { "$value": "#0e1014", "$type": "color" },

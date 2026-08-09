@@ -37,7 +37,7 @@ export function SelectionPage() {
   return (
     <main className="main-content selection-content">
       <header className="selection-hero">
-        <h1 className="selection-title">TCG Tracker</h1>
+        <h1 className="selection-title">The JonZone Card Zone</h1>
         <p className="selection-subtitle">
           Choose a game to track your collection and deck builds.
         </p>

@@ -23,7 +23,7 @@ afterEach(cleanup);
 describe('SelectionPage', () => {
   it('renders hero and one card per registry entry', () => {
     renderPage();
-    expect(screen.getByRole('heading', { name: 'TCG Tracker' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'The JonZone Card Zone' })).toBeInTheDocument();
     for (const game of GAMES) {
       expect(screen.getByRole('heading', { name: game.name })).toBeInTheDocument();
       expect(screen.getByText(game.publisher)).toBeInTheDocument();
