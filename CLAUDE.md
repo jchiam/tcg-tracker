@@ -18,6 +18,7 @@ npx vitest run src/App.test.tsx          # single unit test file
 npm run test:e2e       # Playwright, all browsers (starts its own vite server)
 npx playwright test --project=chromium   # e2e, chromium only
 npm run build:tokens   # regenerate src/styles/tokens.css from design-tokens.json
+npm run verify:csp     # verify vercel.json CSP connect-src includes VITE_SUPABASE_URL origin (skips if unset)
 npm run storybook      # component workshop on port 6006
 ```
 
@@ -27,7 +28,7 @@ Git hooks (husky): pre-commit runs openspec validate + format:check + lint + tes
 
 ## CI
 
-GitHub Actions (`.github/workflows/`): `ci.yml` runs openspec validate (and fails on active changes with incomplete tasks), format:check, lint, unit tests, build, `npm audit`, then a 3-browser Playwright job, then deploys to Vercel on main pushes (needs `VERCEL_TOKEN`/`VERCEL_ORG_ID`/`VERCEL_PROJECT_ID` secrets). `codecov.yml` uploads coverage (needs `CODECOV_TOKEN`; upload failure doesn't fail CI).
+GitHub Actions (`.github/workflows/`): `ci.yml` runs openspec validate (and fails on active changes with incomplete tasks), format:check, lint, `verify:csp` (against the `VITE_SUPABASE_URL` repo secret; skips when unset), unit tests, build, `npm audit`, then a 3-browser Playwright job, then deploys to Vercel on main pushes (needs `VERCEL_TOKEN`/`VERCEL_ORG_ID`/`VERCEL_PROJECT_ID` secrets). `codecov.yml` uploads coverage (needs `CODECOV_TOKEN`; upload failure doesn't fail CI).
 
 ## OpenSpec
 
@@ -40,7 +41,7 @@ Spec-driven development via [OpenSpec](https://github.com/Fission-AI/OpenSpec) (
 - **Directory roles:** `src/pages/` route-level components, `src/components/` reusable UI, `src/services/` data access wrappers, `src/lib/` clients and domain logic, `src/hooks/` custom hooks. Unit tests are colocated (`*.test.tsx` next to source); Playwright specs live in `tests/` and are excluded from Vitest.
 - **Path alias:** `@/` maps to `src/` (configured in both Vite and tsconfig).
 - **Test setup** (`src/test/setup.ts`) silences `console.warn`/`console.error` globally; MSW server lifecycle is managed per-test-file, not in global setup.
-- **Vercel deploy:** `vercel.json` holds SPA rewrites and CSP headers. When adding an external service (Supabase project URL, image CDN), its origin must be added to `connect-src`/`img-src` there or production requests will be blocked.
+- **Vercel deploy:** `vercel.json` holds SPA rewrites and CSP headers. When adding an external service (Supabase project URL, image CDN), its origin must be added to `connect-src`/`img-src` there or production requests will be blocked. `npm run verify:csp` (also in CI) checks the Supabase origin is present in `connect-src`.
 
 ## Conventions
 

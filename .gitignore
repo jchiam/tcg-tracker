@@ -18,6 +18,8 @@ dist-ssr
 test-results
 playwright-report
 coverage
+coverage_output.txt
+
 
 # Storybook
 storybook-static
@@ -33,6 +35,7 @@ storybook-static
 *.sln
 *.sw?
 .vercel
+.env
 .env*.local
 
 # AI
@@ -41,3 +44,4 @@ storybook-static
 .qwen
 .agent
 !.agent/settings.json
+

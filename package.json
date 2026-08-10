@@ -12,6 +12,7 @@
     "build": "tsc -b && vite build",
     "prebuild": "npm run build:tokens",
     "lint": "eslint .",
+    "verify:csp": "node scripts/verify-csp-connect-src.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "preview": "vite preview",
