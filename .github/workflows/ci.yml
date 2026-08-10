@@ -1,0 +1,114 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate OpenSpec specs and changes
+        run: npx openspec validate --all --json
+
+      - name: Check no active OpenSpec changes have incomplete tasks
+        shell: bash
+        run: |
+          FAILED=0
+          for change_dir in openspec/changes/*/; do
+            name=$(basename "$change_dir")
+            [ "$name" = "archive" ] && continue
+            tasks_file="${change_dir}tasks.md"
+            [ -f "$tasks_file" ] || continue
+            if grep -qF "- [ ]" "$tasks_file"; then
+              count=$(grep -cF "- [ ]" "$tasks_file")
+              echo "::error::Active change '$name' has $count incomplete task(s) — archive or complete before merging"
+              FAILED=1
+            fi
+          done
+          exit $FAILED
+
+      - name: Check formatting
+        run: npm run format:check
+
+      - name: Lint codebase
+        run: npm run lint
+
+      - name: Run unit tests
+        run: npm test
+
+      - name: Verify production build
+        run: npm run build
+
+      - name: Security audit
+        run: npm audit
+
+  e2e-tests:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    needs: build_and_test
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps chromium firefox webkit
+      - name: Run Playwright tests
+        run: npm run test:e2e
+      - uses: actions/upload-artifact@v6
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [build_and_test, e2e-tests]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      - name: Build Project Artifacts
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      - name: Deploy Project Artifacts to Vercel
+        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}

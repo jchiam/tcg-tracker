@@ -25,6 +25,10 @@ Dev server port is **5174**, not Vite's default 5173 — that port is reserved f
 
 Git hooks (husky): pre-commit runs openspec validate + format:check + lint + test; pre-push runs build + test:e2e. E2e needs browsers installed once via `npx playwright install`.
 
+## CI
+
+GitHub Actions (`.github/workflows/`): `ci.yml` runs openspec validate (and fails on active changes with incomplete tasks), format:check, lint, unit tests, build, `npm audit`, then a 3-browser Playwright job, then deploys to Vercel on main pushes (needs `VERCEL_TOKEN`/`VERCEL_ORG_ID`/`VERCEL_PROJECT_ID` secrets). `codecov.yml` uploads coverage (needs `CODECOV_TOKEN`; upload failure doesn't fail CI).
+
 ## OpenSpec
 
 Spec-driven development via [OpenSpec](https://github.com/Fission-AI/OpenSpec) (`openspec/` dir, `spec-driven` schema). Change proposals live in `openspec/changes/`, accepted specs in `openspec/specs/`. Start a change with `/opsx:propose "idea"`; archive completed changes with `npx openspec archive`. `npx openspec validate --all` runs in pre-commit. The `.claude/commands` and `.claude/skills` files it generates are git-ignored — regenerate on a fresh clone with `npx openspec init --tools claude`.
