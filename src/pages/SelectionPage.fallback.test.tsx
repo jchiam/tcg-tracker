@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { render, screen, fireEvent, cleanup } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
+import type { Session } from '@supabase/supabase-js';
 import { SelectionPage } from './SelectionPage';
 
 vi.mock('@/lib/games', () => ({
@@ -19,13 +20,17 @@ vi.mock('@/lib/games', () => ({
   ],
 }));
 
+const mockSession = {
+  user: { id: 'test-user-123', email: 'test@example.com' },
+} as unknown as Session;
+
 afterEach(cleanup);
 
 describe('SelectionPage image fallback', () => {
   it('hides a failed cover image and keeps the card functional', () => {
     render(
       <MemoryRouter>
-        <SelectionPage />
+        <SelectionPage session={mockSession} isAuthLoading={false} signInWithGoogle={vi.fn()} />
       </MemoryRouter>,
     );
 

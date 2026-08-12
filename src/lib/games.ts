@@ -1,5 +1,13 @@
 import { lazy } from 'react';
 import type { ComponentType, LazyExoticComponent } from 'react';
+import type { Session } from '@supabase/supabase-js';
+
+/** Props App passes to every lazy game page; pages gate on `session` via AuthGate. */
+export interface GamePageProps {
+  session: Session | null;
+  isAuthLoading: boolean;
+  onSignIn: () => void;
+}
 
 export interface Game {
   /** Short game id used in tokens, CSS classes, and future table prefixes: 'ws', 'gd'. */
@@ -17,7 +25,7 @@ export interface Game {
   coverImage: string | null;
   /** SelectionPage card header background class from index.css (`bg-<id>-sel`). */
   bgClass: string;
-  Page: LazyExoticComponent<ComponentType>;
+  Page: LazyExoticComponent<ComponentType<GamePageProps>>;
 }
 
 /**

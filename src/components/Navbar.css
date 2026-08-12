@@ -54,10 +54,25 @@
   transform: translateY(0);
 }
 
+.nav-auth {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.user-email {
+  color: var(--color-text-secondary);
+  font-size: var(--typography-font-size-base);
+}
+
 @media (max-width: 768px) {
   .navbar {
     flex-direction: column;
     padding: var(--spacing-md);
     gap: var(--spacing-md);
+  }
+  .nav-auth {
+    width: 100%;
+    justify-content: space-between;
   }
 }
