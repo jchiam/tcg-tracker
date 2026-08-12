@@ -45,3 +45,6 @@ storybook-static
 .agent
 !.agent/settings.json
 
+
+.vercel
+.env*.local
