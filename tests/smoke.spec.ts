@@ -7,25 +7,17 @@ test('landing page loads with both game cards', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Gundam Card Game' })).toBeVisible();
 });
 
-test('card click navigates to Weiss Schwarz', async ({ page }) => {
+test('signed-out landing page marks every card as requiring login', async ({ page }) => {
   await page.goto('/');
-  await page.getByRole('button', { name: /Weiss Schwarz/ }).click();
-  await expect(page).toHaveURL('/weiss-schwarz');
-  await expect(page.getByRole('heading', { name: 'Weiss Schwarz' })).toBeVisible();
+  await expect(page.getByText('Requires Login')).toHaveCount(2);
+  await expect(page.getByRole('button', { name: 'Sign In with Google' })).toBeVisible();
 });
 
-test('card click navigates to Gundam Card Game', async ({ page }) => {
-  await page.goto('/');
-  await page.getByRole('button', { name: /Gundam Card Game/ }).click();
-  await expect(page).toHaveURL('/gundam');
-  await expect(page.getByRole('heading', { name: 'Gundam Card Game' })).toBeVisible();
-});
-
-test('direct URL access renders game pages', async ({ page }) => {
+test('direct URL access shows the auth gate when signed out', async ({ page }) => {
   await page.goto('/weiss-schwarz');
-  await expect(page.getByRole('heading', { name: 'Weiss Schwarz' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Welcome to the Card Zone' })).toBeVisible();
   await page.goto('/gundam');
-  await expect(page.getByRole('heading', { name: 'Gundam Card Game' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Welcome to the Card Zone' })).toBeVisible();
 });
 
 test('switcher swaps games and brand returns home', async ({ page }) => {
@@ -33,7 +25,6 @@ test('switcher swaps games and brand returns home', async ({ page }) => {
   await page.getByRole('button', { name: 'Switch Game' }).click();
   await page.getByRole('link', { name: /Gundam Card Game/ }).click();
   await expect(page).toHaveURL('/gundam');
-  await expect(page.getByRole('heading', { name: 'Gundam Card Game' })).toBeVisible();
 
   await page.getByRole('link', { name: /The JonZone Card Zone/ }).click();
   await expect(page).toHaveURL('/');

@@ -6,6 +6,10 @@ const meta: Meta<typeof Navbar> = {
   title: 'Components/Navbar',
   component: Navbar,
   parameters: { layout: 'fullscreen' },
+  args: {
+    onSignIn: () => {},
+    onSignOut: () => {},
+  },
 };
 
 export default meta;
@@ -25,6 +29,19 @@ export const OnGamePage: Story = {
   decorators: [
     (Story) => (
       <MemoryRouter initialEntries={['/weiss-schwarz']}>
+        <Story />
+      </MemoryRouter>
+    ),
+  ],
+};
+
+export const SignedIn: Story = {
+  args: {
+    userEmail: 'trainer@example.com',
+  },
+  decorators: [
+    (Story) => (
+      <MemoryRouter initialEntries={['/']}>
         <Story />
       </MemoryRouter>
     ),

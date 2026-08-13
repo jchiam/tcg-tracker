@@ -6,7 +6,7 @@ Persistent navigation chrome for the app: a navbar with a brand link home and a 
 
 ### Requirement: Persistent navbar with brand link
 
-The system SHALL render a navbar on every route, containing the brand mark and app name "The JonZone Card Zone" as a link to `/`. The navbar SHALL NOT contain authentication controls until an auth capability exists.
+The system SHALL render a navbar on every route, containing the brand mark and app name "The JonZone Card Zone" as a link to `/`, and an auth section on the right (per the `auth` capability).
 
 #### Scenario: Navbar on landing page
 

@@ -1,15 +1,29 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
+import type { Session } from '@supabase/supabase-js';
 import { GAMES } from '@/lib/games';
 import type { Game } from '@/lib/games';
 import './SelectionPage.css';
 
-function GameCard({ game }: { game: Game }) {
-  const navigate = useNavigate();
+interface SelectionPageProps {
+  session: Session | null;
+  isAuthLoading: boolean;
+  signInWithGoogle: (path: string) => void;
+}
+
+function GameCard({
+  game,
+  isSignedIn,
+  onSelect,
+}: {
+  game: Game;
+  isSignedIn: boolean;
+  onSelect: (path: string) => void;
+}) {
   const [imageFailed, setImageFailed] = useState(false);
 
   return (
-    <button onClick={() => navigate(game.path)} className="selection-card">
+    <button onClick={() => onSelect(game.path)} className="selection-card">
       <div className={`selection-card-header ${game.bgClass}`}>
         {game.coverImage && !imageFailed && (
           <img
@@ -20,6 +34,12 @@ function GameCard({ game }: { game: Game }) {
           />
         )}
         <div className="selection-card-overlay"></div>
+
+        {!isSignedIn && (
+          <div className="selection-card-badges">
+            <span className="requires-login-badge">Requires Login</span>
+          </div>
+        )}
       </div>
 
       <div className="selection-card-body">
@@ -33,7 +53,27 @@ function GameCard({ game }: { game: Game }) {
   );
 }
 
-export function SelectionPage() {
+export function SelectionPage({ session, isAuthLoading, signInWithGoogle }: SelectionPageProps) {
+  const navigate = useNavigate();
+
+  // Signed-out selections round-trip through Google OAuth and land back on the
+  // chosen game's route.
+  const handleGameSelect = (path: string) => {
+    if (!session) {
+      signInWithGoogle(path);
+    } else {
+      navigate(path);
+    }
+  };
+
+  if (isAuthLoading) {
+    return (
+      <main className="main-content selection-content">
+        <p>Checking authentication...</p>
+      </main>
+    );
+  }
+
   return (
     <main className="main-content selection-content">
       <header className="selection-hero">
@@ -45,7 +85,7 @@ export function SelectionPage() {
 
       <section className="selection-grid">
         {GAMES.map((game) => (
-          <GameCard key={game.id} game={game} />
+          <GameCard key={game.id} game={game} isSignedIn={!!session} onSelect={handleGameSelect} />
         ))}
       </section>
 
