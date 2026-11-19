@@ -127,9 +127,9 @@
     "toast": { "$value": 9999, "$type": "number" }
   },
   "transition": {
-    "fast": { "$value": "0.15s ease", "$type": "duration" },
-    "normal": { "$value": "0.3s ease", "$type": "duration" },
-    "slow": { "$value": "0.5s ease", "$type": "duration" }
+    "fast": { "$value": "0.15s ease" },
+    "normal": { "$value": "0.3s ease" },
+    "slow": { "$value": "0.5s ease" }
   },
   "duration": {
     "instant": { "$value": "0.01ms", "$type": "duration" },
