@@ -47,5 +47,6 @@ src/
   styles/       # design-tokens.json + generated tokens.css
   test/         # Test setup and utilities
 tests/          # Playwright e2e specs
-supabase/       # Migrations and local config
 ```
+
+The database is the shared JonZone Supabase project (`game-tracker-db`), also used by game-tracker and toy-tracker. This app's tables live in the `tcg` schema. Migrations live in [jonzone-supabase](https://github.com/jchiam/jonzone-supabase), never in this repo.
