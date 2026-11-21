@@ -127,15 +127,15 @@
     "toast": { "$value": 9999, "$type": "number" }
   },
   "transition": {
-    "fast": { "$value": "0.15s ease", "$type": "duration" },
-    "normal": { "$value": "0.3s ease", "$type": "duration" },
-    "slow": { "$value": "0.5s ease", "$type": "duration" }
+    "fast": { "$value": "0.15s ease", "$type": "other" },
+    "normal": { "$value": "0.3s ease", "$type": "other" },
+    "slow": { "$value": "0.5s ease", "$type": "other" }
   },
   "duration": {
-    "instant": { "$value": "0.01ms", "$type": "duration" },
-    "fast": { "$value": "0.15s", "$type": "duration" },
-    "normal": { "$value": "0.3s", "$type": "duration" },
-    "slow": { "$value": "0.5s", "$type": "duration" },
-    "pulse": { "$value": "1.5s", "$type": "duration" }
+    "instant": { "$value": "0.01ms", "$type": "other" },
+    "fast": { "$value": "0.15s", "$type": "other" },
+    "normal": { "$value": "0.3s", "$type": "other" },
+    "slow": { "$value": "0.5s", "$type": "other" },
+    "pulse": { "$value": "1.5s", "$type": "other" }
   }
 }
